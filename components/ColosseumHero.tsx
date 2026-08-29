@@ -63,8 +63,24 @@ export function ColosseumHero() {
 
       {scene === "arena" && (
         <section className="scene arena scene--active" style={{ width: "100%", minHeight: "100svh", overflow: "hidden" }}>
-          <img className="arena__background" src="/arena-gladiators.jpg" alt="Гладиаторы сражаются на арене перед заполненными трибунами на закате" />
+          <img
+            className="arena__background"
+            src="/arena-gladiators.jpg"
+            alt="Гладиаторы сражаются на арене перед заполненными трибунами на закате"
+            style={{ filter: "saturate(1.18) contrast(1.06) brightness(.86) sepia(.12)" }}
+          />
           <div className="arena__shade" aria-hidden="true" />
+          <div
+            aria-hidden="true"
+            style={{
+              position: "absolute",
+              inset: 0,
+              zIndex: 2,
+              pointerEvents: "none",
+              background: "radial-gradient(circle at 72% 4%, rgba(255,158,54,.38), transparent 34%), linear-gradient(180deg, rgba(170,70,15,.16), transparent 48%)",
+              mixBlendMode: "screen",
+            }}
+          />
 
           <header className="arena__header">
             <p className="arena__eyebrow">Арена Колизея</p>
@@ -118,8 +134,36 @@ export function ColosseumHero() {
             })}
           </div>
 
-          <button className="arena-back-spear" type="button" onClick={returnToHero} aria-label="Вернуться на первую страницу">
-            <span aria-hidden="true" />
+          <button
+            type="button"
+            onClick={returnToHero}
+            aria-label="Вернуться на первую страницу"
+            title="Вернуться на первую страницу"
+            style={{
+              position: "absolute",
+              left: "clamp(14px, 2vw, 28px)",
+              bottom: "clamp(14px, 2vw, 26px)",
+              zIndex: 8,
+              width: "82px",
+              height: "44px",
+              padding: 0,
+              border: 0,
+              background: "transparent",
+              cursor: "pointer",
+              filter: "drop-shadow(0 4px 7px rgba(0,0,0,.7))",
+            }}
+          >
+            <svg viewBox="0 0 100 44" width="82" height="44" aria-hidden="true">
+              <defs>
+                <linearGradient id="redSpear" x1="0" x2="1">
+                  <stop offset="0" stopColor="#57140e" />
+                  <stop offset=".55" stopColor="#b42a1c" />
+                  <stop offset="1" stopColor="#64120d" />
+                </linearGradient>
+              </defs>
+              <path d="M96 22 71 8l6 10H24v8h53l-6 10Z" fill="url(#redSpear)" stroke="#e06a43" strokeWidth="1.5" />
+              <rect x="7" y="18" width="22" height="8" rx="4" fill="#72170f" stroke="#d45532" strokeWidth="1.2" />
+            </svg>
             <span className="sr-only">Вернуться на первую страницу</span>
           </button>
         </section>
