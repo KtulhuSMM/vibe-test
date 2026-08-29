@@ -146,8 +146,9 @@ export function ColosseumHero() {
                           openChapter(index);
                         }
                       }}
+                      aria-label={`Открыть главу ${item.roman}: ${item.title}`}
                     >
-                      {item.title}
+                      Открыть главу
                     </span>
                   )}
                 </button>
