@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { chapters } from "@/data/chapters";
 
 type Scene = "hero" | "arena" | "chapter" | "purchase";
@@ -9,7 +9,6 @@ export function ColosseumHero() {
   const [scene, setScene] = useState<Scene>("hero");
   const [chapterIndex, setChapterIndex] = useState(0);
   const [flippedIndex, setFlippedIndex] = useState<number | null>(null);
-  const audioRef = useRef<{ctx: AudioContext; source: AudioBufferSourceNode; gain: GainNode} | null>(null);
 
   const chapter = chapters[chapterIndex];
 
@@ -17,56 +16,19 @@ export function ColosseumHero() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [scene, chapterIndex]);
 
-  useEffect(() => {
-    return () => stopCrowd();
-  }, []);
-
-  function startCrowd() {
-    if (audioRef.current || typeof window === "undefined") return;
-    const AudioCtx = window.AudioContext || (window as typeof window & { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
-    if (!AudioCtx) return;
-    const ctx = new AudioCtx();
-    const seconds = 3;
-    const buffer = ctx.createBuffer(1, ctx.sampleRate * seconds, ctx.sampleRate);
-    const data = buffer.getChannelData(0);
-    let last = 0;
-    for (let i = 0; i < data.length; i++) {
-      const white = Math.random() * 2 - 1;
-      last = last * 0.985 + white * 0.015;
-      data[i] = last * 2.8;
-    }
-    const source = ctx.createBufferSource();
-    source.buffer = buffer;
-    source.loop = true;
-    const filter = ctx.createBiquadFilter();
-    filter.type = "bandpass";
-    filter.frequency.value = 420;
-    filter.Q.value = 0.55;
-    const gain = ctx.createGain();
-    gain.gain.value = 0.085;
-    source.connect(filter).connect(gain).connect(ctx.destination);
-    source.start();
-    audioRef.current = { ctx, source, gain };
-  }
-
-  function stopCrowd() {
-    const audio = audioRef.current;
-    if (!audio) return;
-    try { audio.source.stop(); } catch {}
-    void audio.ctx.close();
-    audioRef.current = null;
-  }
-
   function enterArena() {
     setFlippedIndex(null);
     setScene("arena");
-    startCrowd();
+  }
+
+  function returnToHero() {
+    setFlippedIndex(null);
+    setScene("hero");
   }
 
   function openChapter(index: number) {
     setChapterIndex(index);
     setScene("chapter");
-    stopCrowd();
   }
 
   function flipCoin(index: number) {
@@ -101,7 +63,7 @@ export function ColosseumHero() {
 
       {scene === "arena" && (
         <section className="scene arena scene--active" style={{ width: "100%", minHeight: "100svh", overflow: "hidden" }}>
-          <img className="arena__background" src="/arena-gladiators.jpg" alt="Гладиаторы сражаются на арене перед заполненными трибунами" />
+          <img className="arena__background" src="/arena-gladiators.jpg" alt="Гладиаторы сражаются на арене перед заполненными трибунами на закате" />
           <div className="arena__shade" aria-hidden="true" />
 
           <header className="arena__header">
@@ -155,6 +117,11 @@ export function ColosseumHero() {
               );
             })}
           </div>
+
+          <button className="arena-back-spear" type="button" onClick={returnToHero} aria-label="Вернуться на первую страницу">
+            <span aria-hidden="true" />
+            <span className="sr-only">Вернуться на первую страницу</span>
+          </button>
         </section>
       )}
 
