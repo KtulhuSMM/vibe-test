@@ -84,13 +84,9 @@ export function ColosseumHero() {
         <section className="scene arena scene--active" style={{ width: "100%", minHeight: "100svh", overflow: "hidden" }}>
           <img
             className="arena__background"
-            src="/arena-gladiators.jpg"
+            src="/arena-gladiators-hd.webp"
             alt="Гладиаторы сражаются на арене перед заполненными трибунами на закате"
-            style={{
-              filter: "saturate(1.08) contrast(1.14) brightness(.95)",
-              transform: "none",
-              imageRendering: "auto",
-            }}
+            style={{ filter: "contrast(1.04) brightness(.96)" }}
           />
           <div className="arena__shade" aria-hidden="true" />
           <div
@@ -100,7 +96,7 @@ export function ColosseumHero() {
               inset: 0,
               zIndex: 2,
               pointerEvents: "none",
-              background: "radial-gradient(circle at 72% 4%, rgba(255,158,54,.26), transparent 34%), linear-gradient(180deg, rgba(170,70,15,.08), transparent 48%)",
+              background: "radial-gradient(circle at 72% 4%, rgba(255,158,54,.24), transparent 34%), linear-gradient(180deg, rgba(170,70,15,.08), transparent 48%)",
               mixBlendMode: "screen",
             }}
           />
