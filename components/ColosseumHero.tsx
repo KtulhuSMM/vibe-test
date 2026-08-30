@@ -214,9 +214,35 @@ export function ColosseumHero() {
       {scene === "purchase" && (
         <section className="scene purchase scene--active">
           <div className="purchase__glow" aria-hidden="true" />
-          <div className="purchase__book" aria-hidden="true">
-            <span>Современный<br />Колизей</span>
-            <small>Гладиаторы успеха</small>
+          <div
+            className="purchase__book"
+            aria-hidden="true"
+            style={{
+              width: "min(420px, 34vw)",
+              aspectRatio: "auto",
+              display: "block",
+              alignSelf: "start",
+              marginTop: 0,
+              padding: 0,
+              border: 0,
+              background: "transparent",
+              boxShadow: "none",
+              transform: "none",
+            }}
+          >
+            <img
+              src="/purchase-poster.webp"
+              alt=""
+              style={{
+                display: "block",
+                width: "100%",
+                height: "auto",
+                border: "2px solid #b17a34",
+                borderRadius: 14,
+                boxShadow: "20px 30px 60px rgba(0,0,0,.6)",
+                transform: "rotate(-2deg)",
+              }}
+            />
           </div>
           <div className="purchase__content">
             <p className="purchase__eyebrow">Первые пять глав пройдены</p>
