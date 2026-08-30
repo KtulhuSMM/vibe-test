@@ -86,7 +86,11 @@ export function ColosseumHero() {
             className="arena__background"
             src="/arena-gladiators.jpg"
             alt="Гладиаторы сражаются на арене перед заполненными трибунами на закате"
-            style={{ filter: "saturate(1.18) contrast(1.06) brightness(.86) sepia(.12)" }}
+            style={{
+              filter: "saturate(1.08) contrast(1.14) brightness(.95)",
+              transform: "none",
+              imageRendering: "auto",
+            }}
           />
           <div className="arena__shade" aria-hidden="true" />
           <div
@@ -96,7 +100,7 @@ export function ColosseumHero() {
               inset: 0,
               zIndex: 2,
               pointerEvents: "none",
-              background: "radial-gradient(circle at 72% 4%, rgba(255,158,54,.38), transparent 34%), linear-gradient(180deg, rgba(170,70,15,.16), transparent 48%)",
+              background: "radial-gradient(circle at 72% 4%, rgba(255,158,54,.26), transparent 34%), linear-gradient(180deg, rgba(170,70,15,.08), transparent 48%)",
               mixBlendMode: "screen",
             }}
           />
@@ -119,17 +123,11 @@ export function ColosseumHero() {
                   aria-pressed={flipped}
                 >
                   <span className="coin__inner">
-                    <span
-                      className="coin__face coin__face--front"
-                      style={{ opacity: flipped ? 0 : 1, transition: "opacity 0s linear .45s" }}
-                    >
+                    <span className="coin__face coin__face--front">
                       <img src="/coin-front.jpg" alt="" />
                       <strong>{item.roman}</strong>
                     </span>
-                    <span
-                      className="coin__face coin__face--back"
-                      style={{ opacity: flipped ? 1 : 0, transition: "opacity 0s linear .45s" }}
-                    >
+                    <span className="coin__face coin__face--back">
                       <img src="/coin-back.jpg" alt="Обратная сторона загруженной монеты" />
                     </span>
                   </span>
