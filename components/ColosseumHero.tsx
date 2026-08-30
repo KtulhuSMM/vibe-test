@@ -22,11 +22,9 @@ export function ColosseumHero() {
 
   useEffect(() => {
     if (!qrOpen) return;
-
     function closeOnEscape(event: KeyboardEvent) {
       if (event.key === "Escape") setQrOpen(false);
     }
-
     window.addEventListener("keydown", closeOnEscape);
     return () => window.removeEventListener("keydown", closeOnEscape);
   }, [qrOpen]);
@@ -65,7 +63,6 @@ export function ColosseumHero() {
         <section className="scene hero scene--active">
           <img className="hero__background" src="/colosseum-hero.png" alt="Отреставрированный Колизей на закате" />
           <div className="hero__shade" aria-hidden="true" />
-
           <header className="hero__title-shield">
             <span className="longinus-spear" aria-hidden="true"><i /></span>
             <p className="hero__eyebrow">Интерактивная книга</p>
@@ -73,7 +70,6 @@ export function ColosseumHero() {
             <p className="hero__subtitle">Гладиаторы успеха</p>
             <p className="hero__author">Копылов Николай Максимович</p>
           </header>
-
           <button className="hero__door-button" type="button" onClick={enterArena} aria-label="Войти в Колизей">
             <span className="sr-only">Войти в Колизей</span>
           </button>
@@ -85,7 +81,7 @@ export function ColosseumHero() {
           <img
             className="arena__background"
             src="/arena-gladiators-hd.webp"
-            alt="Гладиаторы сражаются на арене перед заполненными трибунами на закате"
+            alt="Современный Колизей на закате"
             style={{ filter: "contrast(1.04) brightness(.96)" }}
           />
           <div className="arena__shade" aria-hidden="true" />
@@ -100,12 +96,10 @@ export function ColosseumHero() {
               mixBlendMode: "screen",
             }}
           />
-
           <header className="arena__header">
             <p className="arena__eyebrow">Арена Колизея</p>
             <h2>Выберите главу</h2>
           </header>
-
           <div className="coins" aria-label="Первые пять глав книги">
             {chapters.map((item, index) => {
               const flipped = flippedIndex === index;
@@ -152,7 +146,6 @@ export function ColosseumHero() {
               );
             })}
           </div>
-
           <button
             type="button"
             onClick={returnToHero}
@@ -194,7 +187,6 @@ export function ColosseumHero() {
             <button className="text-button" type="button" onClick={returnToArena}>← К монетам</button>
             <span>{chapter ? `Глава ${chapter.roman} из V` : ""}</span>
           </div>
-
           {chapter && (
             <article className="scroll">
               <div className="scroll__rod scroll__rod--top" aria-hidden="true" />
@@ -226,14 +218,11 @@ export function ColosseumHero() {
             <span>Современный<br />Колизей</span>
             <small>Гладиаторы успеха</small>
           </div>
-
           <div className="purchase__content">
             <p className="purchase__eyebrow">Первые пять глав пройдены</p>
             <h2>Путешествие продолжается</h2>
             <p>В полной версии читатель сможет продолжить путь по Колизею.</p>
-
             <div className="demo-notice">ДЕМО • настоящая оплата книги не подключена</div>
-
             <div className="payment-preview" aria-label="Демонстрация будущих способов оплаты">
               <div className="payment-card">
                 <strong>СБП</strong>
@@ -253,10 +242,8 @@ export function ColosseumHero() {
                 <small>Демо: QR открывает СберБанк Онлайн без автоматического списания.</small>
               </div>
             </div>
-
             <button className="text-button" type="button" onClick={returnToArena}>← Вернуться к главам</button>
           </div>
-
           {qrOpen && (
             <div
               role="dialog"
@@ -311,7 +298,6 @@ export function ColosseumHero() {
                 >
                   ×
                 </button>
-
                 <img
                   src="/sber-demo-qr.png"
                   alt="Увеличенный QR-код для открытия СберБанк Онлайн"
@@ -325,7 +311,6 @@ export function ColosseumHero() {
                     imageRendering: "pixelated",
                   }}
                 />
-
                 <button className="primary-button" type="button" onClick={openSberDemo}>
                   Открыть тестовый перевод в СберБанк Онлайн
                 </button>
