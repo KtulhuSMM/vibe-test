@@ -100,11 +100,17 @@ export function ColosseumHero() {
                   aria-pressed={flipped}
                 >
                   <span className="coin__inner">
-                    <span className="coin__face coin__face--front">
+                    <span
+                      className="coin__face coin__face--front"
+                      style={{ opacity: flipped ? 0 : 1, transition: "opacity 0s linear .45s" }}
+                    >
                       <img src="/coin-front.jpg" alt="" />
                       <strong>{item.roman}</strong>
                     </span>
-                    <span className="coin__face coin__face--back">
+                    <span
+                      className="coin__face coin__face--back"
+                      style={{ opacity: flipped ? 1 : 0, transition: "opacity 0s linear .45s" }}
+                    >
                       <img src="/coin-back.jpg" alt="Обратная сторона загруженной монеты" />
                     </span>
                   </span>
