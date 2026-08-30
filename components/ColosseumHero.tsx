@@ -5,16 +5,31 @@ import { chapters } from "@/data/chapters";
 
 type Scene = "hero" | "arena" | "chapter" | "purchase";
 
+const SBER_DEMO_URL = "https://online.sberbank.ru/";
+
 export function ColosseumHero() {
   const [scene, setScene] = useState<Scene>("hero");
   const [chapterIndex, setChapterIndex] = useState(0);
   const [flippedIndex, setFlippedIndex] = useState<number | null>(null);
+  const [qrOpen, setQrOpen] = useState(false);
 
   const chapter = chapters[chapterIndex];
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
+    setQrOpen(false);
   }, [scene, chapterIndex]);
+
+  useEffect(() => {
+    if (!qrOpen) return;
+
+    function closeOnEscape(event: KeyboardEvent) {
+      if (event.key === "Escape") setQrOpen(false);
+    }
+
+    window.addEventListener("keydown", closeOnEscape);
+    return () => window.removeEventListener("keydown", closeOnEscape);
+  }, [qrOpen]);
 
   function enterArena() {
     setFlippedIndex(null);
@@ -38,6 +53,10 @@ export function ColosseumHero() {
   function returnToArena() {
     setFlippedIndex(null);
     setScene("arena");
+  }
+
+  function openSberDemo() {
+    window.open(SBER_DEMO_URL, "_blank", "noopener,noreferrer");
   }
 
   return (
@@ -227,14 +246,101 @@ export function ColosseumHero() {
                 <span>Будущий способ оплаты</span>
               </div>
               <div className="payment-card payment-card--qr">
-                <img className="real-qr" src="/sber-demo-qr.png" alt="Демонстрационный QR-код, открывающий СберБанк Онлайн" />
-                <span>Сканируется телефоном</span>
-                <small>Демо: открывает СберБанк Онлайн, но не создаёт платёж.</small>
+                <button
+                  type="button"
+                  onClick={() => setQrOpen(true)}
+                  aria-label="Увеличить QR-код СберБанк Онлайн"
+                  title="Нажмите, чтобы увеличить QR-код"
+                  style={{ border: 0, padding: 0, background: "transparent", cursor: "zoom-in", borderRadius: 8 }}
+                >
+                  <img className="real-qr" src="/sber-demo-qr.png" alt="Демонстрационный QR-код, открывающий СберБанк Онлайн" />
+                </button>
+                <span>Нажмите на QR-код, чтобы увеличить</span>
+                <small>Демо: QR открывает СберБанк Онлайн без автоматического списания.</small>
               </div>
             </div>
 
             <button className="text-button" type="button" onClick={returnToArena}>← Вернуться к главам</button>
           </div>
+
+          {qrOpen && (
+            <div
+              role="dialog"
+              aria-modal="true"
+              aria-label="Увеличенный QR-код СберБанк Онлайн"
+              onClick={() => setQrOpen(false)}
+              style={{
+                position: "fixed",
+                inset: 0,
+                zIndex: 100,
+                display: "grid",
+                placeItems: "center",
+                padding: 20,
+                background: "rgba(0,0,0,.82)",
+                backdropFilter: "blur(8px)",
+              }}
+            >
+              <div
+                onClick={(event) => event.stopPropagation()}
+                style={{
+                  position: "relative",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  gap: 14,
+                  maxWidth: "94vw",
+                  padding: 18,
+                  border: "1px solid rgba(240,208,146,.35)",
+                  borderRadius: 18,
+                  background: "#120b07",
+                  boxShadow: "0 24px 80px rgba(0,0,0,.7)",
+                }}
+              >
+                <button
+                  type="button"
+                  onClick={() => setQrOpen(false)}
+                  aria-label="Закрыть увеличенный QR-код"
+                  style={{
+                    position: "absolute",
+                    top: 8,
+                    right: 10,
+                    width: 34,
+                    height: 34,
+                    border: 0,
+                    borderRadius: 999,
+                    background: "rgba(0,0,0,.65)",
+                    color: "#fff",
+                    fontSize: 22,
+                    lineHeight: 1,
+                    cursor: "pointer",
+                  }}
+                >
+                  ×
+                </button>
+
+                <img
+                  src="/sber-demo-qr.png"
+                  alt="Увеличенный QR-код для открытия СберБанк Онлайн"
+                  style={{
+                    width: "min(528px, 84vw)",
+                    height: "auto",
+                    display: "block",
+                    background: "#fff",
+                    padding: 28,
+                    borderRadius: 16,
+                    imageRendering: "pixelated",
+                  }}
+                />
+
+                <button className="primary-button" type="button" onClick={openSberDemo}>
+                  Открыть тестовый перевод в СберБанк Онлайн
+                </button>
+                <small style={{ maxWidth: 520, textAlign: "center", color: "#bca98a", font: "600 .72rem/1.4 system-ui,sans-serif" }}>
+                  Это демонстрационный переход: сумма и получатель не заданы, списание не выполняется автоматически.
+                </small>
+              </div>
+            </div>
+          )}
         </section>
       )}
     </main>
