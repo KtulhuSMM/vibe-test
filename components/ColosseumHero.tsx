@@ -222,6 +222,7 @@ export function ColosseumHero() {
               aspectRatio: "auto",
               display: "block",
               alignSelf: "start",
+              justifySelf: "center",
               marginTop: 0,
               padding: 0,
               border: 0,
@@ -231,7 +232,7 @@ export function ColosseumHero() {
             }}
           >
             <img
-              src="/purchase-poster.webp"
+              src="/purchase-poster-user.webp"
               alt=""
               style={{
                 display: "block",
@@ -240,7 +241,7 @@ export function ColosseumHero() {
                 border: "2px solid #b17a34",
                 borderRadius: 14,
                 boxShadow: "20px 30px 60px rgba(0,0,0,.6)",
-                transform: "rotate(-2deg)",
+                transform: "none",
               }}
             />
           </div>
